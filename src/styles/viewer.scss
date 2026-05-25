@@ -1,0 +1,268 @@
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;700&family=Manrope:wght@400;500;700&family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;600;700&display=swap");
+$font: "Work Sans", "Manrope", "Roboto", "Open Sans", Arial, sans-serif;
+
+@mixin photoFrame {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@mixin buttonReset {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+@mixin buttonPanel {
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+@mixin aspectRatio($width, $height) {
+  &--#{$width}-#{$height} {
+    aspect-ratio: #{$width} / #{$height};
+  }
+}
+
+@mixin hiddenButton {
+   opacity: 0;
+   pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+@mixin focusButton {
+     opacity: 1;
+    pointer-events: auto;
+    border-color: transparent;
+     outline: 2px solid blue;
+     outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+p {
+  font-family: $font;
+}
+
+.photo-viewer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  font-family: $font;
+
+  &--no-images {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    color: gray;
+  }
+}
+
+.photo-frame {
+ display: none;
+
+ @include aspectRatio(1,1 );
+ @include aspectRatio(16,9 );
+ @include aspectRatio(9,16 );
+ @include aspectRatio(4,3 );
+ @include aspectRatio(3,4 );
+}
+
+.photo-frame--active {
+  @include photoFrame;
+}
+
+.button-panel {
+ position: absolute;
+ pointer-events: none;
+ z-index: 5;
+     top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+  &--top-left {
+   @include buttonPanel;
+    bottom: unset;
+    right: unset;
+  }
+
+  &--top-right {
+   @include buttonPanel;
+    bottom: unset;
+    left: unset;
+  }
+
+  &--bottom-left {
+   @include buttonPanel;
+    top: unset;
+    right: unset;
+  }
+
+  &--bottom-right {
+    @include buttonPanel;
+    top: unset;
+    left: unset;
+  }
+
+  &--arrows {
+   @include buttonPanel;
+    justify-content: space-between;
+    
+  }
+}
+
+
+.button {
+  @include buttonReset;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: solid 1px black;
+  border-radius:50%;
+  pointer-events: auto;
+  width: 2rem;
+  height: 2rem;
+  transition: transform 0.2s ease-out;
+  margin: 1rem;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &:focus-visible {
+    transform: scale(1.05);
+    outline: 2px solid blue;
+    outline-offset: 2px;
+  }
+
+  &:active {
+    transform: scale(0.92);
+    transition: transform 0.1s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+}
+
+.button--animate {
+  svg {
+    display: none;
+  }
+
+  &[data-direction="anticlockwise"] {
+    &.button--animate-stopped .icon-anticlockwise-play {
+      display: block;
+    }
+    &.button--animate-playing .icon-anticlockwise-stop {
+      display: block;
+    }
+  }
+
+  &[data-direction="clockwise"] {
+    &.button--animate-stopped .icon-clockwise-play {
+      display: block;
+    }
+    &.button--animate-playing .icon-clockwise-stop {
+      display: block;
+    }
+  }
+
+  &-invisible {
+   @include hiddenButton;
+
+    &:focus-visible {
+      @include focusButton;
+    }
+  }
+}
+
+.button--arrow {
+   @include hiddenButton;
+
+    &:focus-visible {
+      @include focusButton;
+    }
+}
+
+.drag-prompt-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 10;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+  pointer-events: none;
+
+  &--hidden {
+    opacity: 0;
+  }
+}
+
+.drag-prompt-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.drag-prompt-icon {
+  width: 2rem;
+  height: 2rem;
+  color: white;
+
+  &:first-child {
+    animation: dragPromptPulseLeft 2s ease-in-out infinite;
+  }
+
+  &:last-child {
+    animation: dragPromptPulseRight 2s ease-in-out infinite;
+    animation-delay: 1s;
+  }
+}
+
+.drag-prompt-text {
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes dragPromptPulseLeft {
+  0%, 100% {
+    opacity: 0.5;
+    transform: translateX(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-5px);
+  }
+}
+
+@keyframes dragPromptPulseRight {
+  0%, 100% {
+    opacity: 0.5;
+    transform: translateX(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(5px);
+  }
+}

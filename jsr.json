@@ -1,0 +1,25 @@
+{
+  "name": "@zigginator/360-photo",
+  "version": "1.0.0",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "exclude": [
+    "stories/",
+    "stories-react/",
+    "stories-vue/",
+    "storybook-static/",
+    ".storybook/",
+    ".storybook-react/",
+    ".storybook-vue/",
+    "dist/*.js",
+    "dist/*.js.map",
+    "build.js",
+    "example.html",
+    "PUBLISHING.md",
+    "STORYBOOK.md",
+    "src/vite-env.d.ts",
+    "package.json",
+    "package-lock.json"
+  ]
+}
