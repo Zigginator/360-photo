@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>360 Photo Viewer - Vanilla JS Example</title>
+    
+    <!-- Include the CSS from CDN -->
+    <!-- For local development, use: <link rel="stylesheet" href="dist/index.css"> -->
+    <link rel="stylesheet" href="https://esm.sh/jsr/@zigginator/360-photo/styles">
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            margin-top: 0;
+        }
+        #viewer-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>360 Photo Viewer Example</h1>
+        <p>This demonstrates using the 360 Photo Viewer via ESM CDN (no build tools required).</p>
+        
+        <div id="viewer-container"></div>
+    </div>
+
+    <!-- Use ES modules with CDN -->
+    <script type="module">
+        // Import from esm.sh CDN (supports JSR packages)
+        import { PhotoViewer, AspectRatio, h, render } from 'https://esm.sh/jsr/@zigginator/360-photo';
+        
+        // Generate sample images (replace with your actual images)
+        const images = Array.from({ length: 36 }, (_, i) => 
+            `https://loremflickr.com/800/800/cat?lock=${i}`
+        );
+        
+        // Create and render the viewer
+        const viewerElement = h(PhotoViewer, {
+            images: images,
+            aspectRatio: AspectRatio.RATIO_1_1,
+            altAttribute: '360 degree view of a product',
+            showAnimateButton: true,
+            animateButtonPosition: 'bottom-right'
+        });
+        
+        // Render into the container
+        render(viewerElement, document.getElementById('viewer-container'));
+    </script>
+</body>
+</html>

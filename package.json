@@ -1,0 +1,61 @@
+{
+  "name": "@zigginator/360-photo",
+  "version": "1.0.0",
+  "description": "360 photo viewer component",
+  "keywords": [
+    "image",
+    "photo",
+    "carousel",
+    "viewer",
+    "3d",
+    "360"
+  ],
+  "homepage": "https://github.com/Zigginator/360-photo#readme",
+  "bugs": {
+    "url": "https://github.com/Zigginator/360-photo/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zigginator/360-photo.git"
+  },
+  "license": "MIT",
+  "author": "Zigginator",
+  "type": "module",
+  "scripts": {
+    "build:css": "node build.js",
+    "storybook": "storybook dev -p 6006 --config-dir .storybook",
+    "storybook:react": "storybook dev -p 6007 --config-dir .storybook-react",
+    "storybook:vue": "storybook dev -p 6008 --config-dir .storybook-vue",
+    "storybook:all": "concurrently \"npm:storybook\" \"npm:storybook:react\" \"npm:storybook:vue\"",
+    "build-storybook": "storybook build --config-dir .storybook",
+    "build-storybook:all": "npm run build-storybook && storybook build --config-dir .storybook-react -o storybook-static/react && storybook build --config-dir .storybook-vue -o storybook-static/vue",
+    "publish": "npm run build:css && npx jsr publish",
+    "test": "echo \"No tests yet\""
+  },
+  "peerDependencies": {
+    "preact": "^10.0.0"
+  },
+  "devDependencies": {
+    "@preact/compat": "^18.3.1",
+    "@storybook/addon-essentials": "^8.6.14",
+    "@storybook/addon-links": "^8.6.17",
+    "@storybook/blocks": "^8.6.14",
+    "@storybook/preact-vite": "^8.6.17",
+    "@storybook/react-vite": "^8.6.17",
+    "@storybook/vue3-vite": "^8.6.17",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "concurrently": "^9.1.2",
+    "esbuild": "^0.27.3",
+    "esbuild-sass-plugin": "^3.6.0",
+    "preact": "^10.28.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sass": "^1.97.3",
+    "storybook": "^8.6.17",
+    "typescript": "^5.9.3",
+    "vite": "^6.4.1",
+    "vue": "^3.5.13"
+  }
+}
